@@ -9,7 +9,8 @@ class Subject(models.Model):
 class Teacher(models.Model):
     teachers_name = models.CharField(max_length = 63)
     teachers_surname = models.CharField(max_length = 63)
-    subject = models.ForeignKey(Subject, on_delete = models.CASCADE, null = True)
+    # subject = models.ForeignKey(Subject, on_delete = models.CASCADE, null = True)
+    subject = models.ManyToManyField(Subject)
 
 
 class Class(models.Model):
@@ -19,4 +20,5 @@ class Class(models.Model):
 class Student(models.Model):
     students_name = models.CharField(max_length = 63)
     students_surname = models.CharField(max_length = 63)
-    classes = models.ForeignKey(Class, on_delete = models.CASCADE, null = True)
+    # classes = models.ForeignKey(Class, on_delete = models.CASCADE, null = True)
+    classes = models.ManyToManyField(Class)
