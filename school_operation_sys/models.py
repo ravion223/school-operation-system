@@ -6,6 +6,9 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Subject(models.Model):
     subject_name = models.CharField(max_length = 63)
 
+    def __str__(self):
+        return self.subject_name
+
 
 class Teacher(models.Model):
     teachers_name = models.CharField(max_length = 63)
@@ -14,9 +17,15 @@ class Teacher(models.Model):
 
     subject = models.ManyToManyField(Subject)
 
+    def __str__(self):
+        return self.teachers_name
+
 
 class Class(models.Model):
     class_name = models.CharField(max_length = 63)
+
+    def __str__(self):
+        return self.class_name
 
 
 class Student(models.Model):
@@ -25,6 +34,9 @@ class Student(models.Model):
     # classes = models.ForeignKey(Class, on_delete = models.CASCADE, null = True)
 
     classes = models.ManyToManyField(Class)
+
+    def __str__(self):
+        return self.students_name
 
 
 class Schedule(models.Model):
