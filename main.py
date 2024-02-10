@@ -1,6 +1,6 @@
 import django_setup
 
-from school_operation_sys.models import Class, Subject, Teacher, Student
+from school_operation_sys.models import Class, Subject, Teacher, Student, Schedule, Grade
 
 
 def add_class_to_db(class_name):
@@ -52,9 +52,33 @@ def specialize_teacher_to_current_subject(teacher_id, subject_id):
     subject = Subject.objects.get(id = subject_id)
     teacher.subject.add(subject)
 
+
+def add_subject_to_schedule(clas_id, subjects_id, teacher_id):
+    schedule = Schedule(
+        clas_id = clas_id,
+        subjects_id = subjects_id,
+        teacher_id = teacher_id
+    )
+    schedule.save()
+
+    return schedule
+
+
+def add_grade_to_student(grade, student_id, schedule_id):
+    mark = Grade(
+        grade = grade,
+        student_id = student_id,
+        schedule_id = schedule_id
+    )
+
+    mark.save()
+
+    return mark
+
+
 def main():
     while True:
-        question = int(input("Register new class - 1\nAdd new subject - 2\nRegister new teacher - 3\nRegister new student - 4\nSign student to new class - 5\nSpecialize teacher with a subject - 6\nExit - 0\n"))
+        question = int(input("Register new class - 1\nAdd new subject - 2\nRegister new teacher - 3\nRegister new student - 4\nSign student to new class - 5\nSpecialize teacher with a subject - 6\nAdd subject to schedule - 7\nAdd grade to student - 8\nExit - 0\n"))
 
         match question:
             case 1:
@@ -84,6 +108,18 @@ def main():
                 teacher_id = input("Enter teacher's id:")
                 subject_id = input("Enter subject's id:")
                 print(specialize_teacher_to_current_subject(teacher_id, subject_id))
+
+            case 7:
+                clas_id = int(input("Class_Id: "))
+                subjects_id = int(input("Subjects_id: "))
+                teacher_id = int(input("Teacher_id: "))
+                print(add_subject_to_schedule(clas_id, subjects_id, teacher_id))
+
+            case 8:
+                grade = int(input("Grade: "))
+                student_id = int(input("Student id: "))
+                schedule_id = int(input("Schedule id: "))
+                print(add_grade_to_student(grade, student_id, schedule_id))
 
             case 0:
                 break
